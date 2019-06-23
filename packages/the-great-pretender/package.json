@@ -6,12 +6,19 @@
   "repository": "git@github.com:DeX3/the-great-pretender.git",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "build": "run-s clean compile",
+    "generate-data-barrels": "barrelsby --config ./barrelsby.config.json",
+    "build": "run-s clean generate-data-barrels compile",
     "clean": "rimraf lib/",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "tslint -p tsconfig.json"
   },
   "author": "Roman Decker<roman.decker@gmail.com>",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "barrelsby": "^2.1.1"
+  },
+  "dependencies": {
+    "@types/seedrandom": "^2.4.28",
+    "seedrandom": "^3.0.1"
+  }
 }
