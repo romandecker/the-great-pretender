@@ -1,0 +1,17 @@
+{
+  "name": "the-great-pretender",
+  "version": "1.0.0",
+  "description": "Fake data generator",
+  "main": "index.js",
+  "repository": "git@github.com:DeX3/the-great-pretender.git",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "build": "run-s clean compile",
+    "clean": "rimraf lib/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "author": "Roman Decker<roman.decker@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {}
+}
