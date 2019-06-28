@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "link-parent-bin": "link-parent-bin",
-    "postinstall": "lerna bootstrap && link-parent-bin"
+    "postinstall": "link-parent-bin"
   },
   "devDependencies": {
     "@types/node": "^12.0.10",

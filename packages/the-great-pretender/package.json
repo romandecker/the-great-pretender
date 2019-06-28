@@ -15,7 +15,8 @@
   "author": "Roman Decker<roman.decker@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "barrelsby": "^2.1.1"
+    "barrelsby": "^2.1.1",
+    "typedoc": "^0.14.2"
   },
   "dependencies": {
     "@types/seedrandom": "^2.4.28",

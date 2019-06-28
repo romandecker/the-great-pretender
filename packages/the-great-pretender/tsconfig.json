@@ -5,5 +5,13 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "typedocOptions": {
+    "out": "docs",
+    "exclude": "**/*.test.ts",
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeNotExported": true,
+    "excludeExternals": true
+  }
 }

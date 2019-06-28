@@ -1,9 +1,14 @@
 import seedrandom from 'seedrandom';
 import { Picker } from './Picker';
+import { WeightedPicker } from './WeightedPicker';
+import { UnweightedPicker } from './UnweightedPicker';
 import { en } from './data';
 
 type RNG = () => number;
 
+/**
+ * Main class for generating random data.
+ */
 export class Pretender {
   static fromSeed(seed: string) {
     return new Pretender(seedrandom(seed));
@@ -15,20 +20,43 @@ export class Pretender {
 
   firstNames = this.picker([
     ...en.names.firstNames.male.default,
-    ...en.names.firstNames.female.default,
+    ...en.names.firstNames.female.default
   ]);
 
   private constructor(private readonly rng: RNG) {}
 
-  integer(min: number = 0, upperBound: number = Number.MAX_SAFE_INTEGER) {
+  /**
+   * Generate an integer `n` in the range `(min, upperBound]`,
+   * i.e. between `min` inclusively and `upperBound` exclusively.
+   */
+  integer(min: number = 0, upperBound: number = Number.MAX_SAFE_INTEGER): number {
     return Math.floor(this.float(min, upperBound));
   }
 
-  float(min: number = 0, upperBound: number = Number.MAX_VALUE) {
-    return min + this.rng() * (upperBound - min);
+  /**
+   * Generate a random floating point number in the range `(min, max)` inclusively.
+   */
+  float(min: number = 0, max: number = Number.MAX_VALUE): number {
+    return min + this.rng() * (max - min);
   }
 
-  picker<T>(dataSet: T[]): Picker<T> {
-    return new Picker(this, dataSet);
+  /**
+   * Generate either `true` or `false`, depending on the `chance` you
+   * pass (which defaults to `0.5`, i.e. 50%).
+   */
+  boolean(chance: number = 0.5): boolean {
+    return this.float(0, 1) < chance;
+  }
+
+  /**
+   * Generate a new [[Picker]] for the given dataSet that's based on this
+   * `Pretender` instance.
+   */
+  picker<T>(dataSet: T[], weights?: number[]): Picker<T> {
+    if (weights) {
+      return new WeightedPicker(this, dataSet, weights);
+    } else {
+      return new UnweightedPicker(this, dataSet);
+    }
   }
 }
