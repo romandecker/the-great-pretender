@@ -23,7 +23,7 @@ export class WeightedPicker<T> implements Picker<T> {
   }
 
   private getWeightedIndex(array: Weighted<any>[]): number {
-    let passedWeight = 0;
+    let passedWeight = array[0].weight;
     let choice = 0;
 
     for (let i = 1; i < array.length; i++) {
@@ -61,7 +61,7 @@ export class WeightedPicker<T> implements Picker<T> {
       throw new Error(
         `Can't pick at least ${min} unique elements from a data set that only has ${
           this.weightedData.length
-        } elements`
+        } elements`,
       );
     }
 

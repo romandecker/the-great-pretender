@@ -20,7 +20,7 @@ export class Pretender {
 
   firstNames = this.picker([
     ...en.names.firstNames.male.default,
-    ...en.names.firstNames.female.default
+    ...en.names.firstNames.female.default,
   ]);
 
   private constructor(private readonly rng: RNG) {}
@@ -52,6 +52,8 @@ export class Pretender {
    * Generate a new [[Picker]] for the given dataSet that's based on this
    * `Pretender` instance.
    */
+  picker<T>(dataSet: T[]): UnweightedPicker<T>;
+  picker<T>(dataSet: T[], weights: number[]): WeightedPicker<T>;
   picker<T>(dataSet: T[], weights?: number[]): Picker<T> {
     if (weights) {
       return new WeightedPicker(this, dataSet, weights);

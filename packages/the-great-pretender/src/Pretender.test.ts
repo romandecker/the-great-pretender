@@ -1,5 +1,7 @@
 import { Pretender } from './Pretender';
 import { Picker } from './Picker';
+import { UnweightedPicker } from './UnweightedPicker';
+import { WeightedPicker } from './WeightedPicker';
 
 jest.mock('./Picker');
 
@@ -75,10 +77,21 @@ describe('Pretender', () => {
   });
 
   describe('#picker', () => {
-    it('should return an instance of Picker', () => {
-      const dataSet = ['a', 'b', 'c'];
-      const picker = pretender.picker(dataSet);
-      expect(picker).toBeInstanceOf(Picker);
+    describe('when not passing weights', () => {
+      it('should return an instance of UnweightedPicker', () => {
+        const dataSet = ['a', 'b', 'c'];
+        const picker = pretender.picker(dataSet);
+        expect(picker).toBeInstanceOf(UnweightedPicker);
+      });
+    });
+
+    describe('when passing weights', () => {
+      it('should return an instance of WeightedPicker', () => {
+        const dataSet = ['a', 'b', 'c'];
+        const weights = [1, 2, 3];
+        const picker = pretender.picker(dataSet, weights);
+        expect(picker).toBeInstanceOf(WeightedPicker);
+      });
     });
   });
 });

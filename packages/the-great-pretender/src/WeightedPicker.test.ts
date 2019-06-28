@@ -1,56 +1,38 @@
-import { Picker } from './Picker';
+import { WeightedPicker } from './WeightedPicker';
 import { Pretender } from './Pretender';
+import countBy from 'lodash/countBy';
 
-describe('Picker', () => {
-  let picker: Picker<string>;
+describe('WeightedPicker', () => {
+  let picker: WeightedPicker<string>;
   const dataSet = ['foo', 'bar', 'baz', 'qux'];
+  const weights = [50, 25, 12.5, 6.25];
 
   beforeEach(() => {
-    picker = Pretender.fromSeed('tests').picker(dataSet);
+    picker = Pretender.fromSeed('tests').picker(dataSet, weights);
   });
 
   describe('#choice', () => {
-    it('should return a member of the input array', () => {
-      for (let i = 0; i < 100; i++) {
-        const elem = picker.choice();
-        expect(dataSet.find((e) => e === elem)).toBeTruthy();
+    it('should respect the passed weights', () => {
+      const picks = [];
+      for (let i = 0; i < 10000; i++) {
+        picks.push(picker.choice());
       }
+
+      const counts = countBy(picks);
+      expect(counts.foo / counts.bar).toBeCloseTo(2, 1);
+      expect(counts.foo / counts.baz).toBeCloseTo(4, 0);
+      expect(counts.foo / counts.qux).toBeCloseTo(8, 0);
     });
   });
 
   describe('#choose', () => {
-    describe('when only passing min', () => {
-      it('should return an array of length min', () => {
-        for (let i = 0; i < 100; i++) {
-          const elems = picker.choose(3);
-          expect(elems).toHaveLength(3);
-        }
-      });
-    });
+    it('should respect the passed weights', () => {
+      const picks = picker.choose(10000);
 
-    describe('when passing min and max', () => {
-      it('should return an array of length between min and max', () => {
-        for (let i = 0; i < 100; i++) {
-          const elems = picker.choose(1, 3);
-          expect(elems.length).toBeGreaterThanOrEqual(1);
-          expect(elems.length).toBeLessThanOrEqual(3);
-        }
-      });
-    });
-  });
-
-  describe('#sample', () => {
-    it.only('should only return unique picks', () => {
-      for (let i = 0; i < 100; i++) {
-        const elems = picker.sample(1, 4);
-        expect(elems.length).toBeGreaterThanOrEqual(1);
-        expect(elems.length).toBeLessThanOrEqual(4);
-        expect(new Set(elems).size).toBe(elems.length);
-      }
-    });
-
-    it('should throw when trying to pick more elements than are available', () => {
-      expect(() => picker.sample(55)).toThrow();
+      const counts = countBy(picks);
+      expect(counts.foo / counts.bar).toBeCloseTo(2, 1);
+      expect(counts.foo / counts.baz).toBeCloseTo(4, 0);
+      expect(counts.foo / counts.qux).toBeCloseTo(8, 0);
     });
   });
 });
