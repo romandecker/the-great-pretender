@@ -8,10 +8,13 @@
   "exclude": ["node_modules", "**/*.test.ts"],
   "typedocOptions": {
     "out": "docs",
-    "exclude": "**/*.test.ts",
+    "entryPoint": "src/index.ts",
+    "exclude": ["**/*.test.ts", "src/data/**"],
     "excludePrivate": true,
     "excludeProtected": true,
     "excludeNotExported": true,
-    "excludeExternals": true
+    "excludeExternals": true,
+    "externalPattern": "foobar",
+    "theme": "minimal"
   }
 }

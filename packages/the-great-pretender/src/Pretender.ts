@@ -2,7 +2,7 @@ import seedrandom from 'seedrandom';
 import { Picker } from './Picker';
 import { WeightedPicker } from './WeightedPicker';
 import { UnweightedPicker } from './UnweightedPicker';
-import { en } from './data';
+// import { en } from './data';
 
 type RNG = () => number;
 
@@ -18,10 +18,13 @@ export class Pretender {
     return new Pretender(rng);
   }
 
-  firstNames = this.picker([
-    ...en.names.firstNames.male.default,
-    ...en.names.firstNames.female.default,
-  ]);
+  /**
+   * Picker for first names
+   */
+  // firstNames = this.picker([
+  //   ...en.names.firstNames.male.default,
+  //   ...en.names.firstNames.female.default,
+  // ]);
 
   private constructor(private readonly rng: RNG) {}
 
@@ -49,10 +52,20 @@ export class Pretender {
   }
 
   /**
-   * Generate a new [[Picker]] for the given dataSet that's based on this
-   * `Pretender` instance.
+   * Generate a new [[UnweightedPicker]] for the given dataSet that's based on this `Pretender`
+   * instance.
+   *
+   * @param dataSet The dataset to pick from
    */
   picker<T>(dataSet: T[]): UnweightedPicker<T>;
+
+  /**
+   * Generate a new [[WeightedPicker]] for the given dataSet that's based on this
+   * `Pretender` instance.
+   *
+   * @param dataSet The dataset to pick from
+   * @param weights The weights corresponding to the items in `dataSet`
+   */
   picker<T>(dataSet: T[], weights: number[]): WeightedPicker<T>;
   picker<T>(dataSet: T[], weights?: number[]): Picker<T> {
     if (weights) {

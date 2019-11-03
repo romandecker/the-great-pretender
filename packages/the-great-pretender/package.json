@@ -6,8 +6,8 @@
   "repository": "git@github.com:DeX3/the-great-pretender.git",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "generate-data-barrels": "barrelsby --config ./barrelsby.config.json",
-    "build": "run-s clean generate-data-barrels compile",
+    "build": "run-s clean compile",
+    "docs": "typedoc",
     "clean": "rimraf lib/",
     "test": "jest",
     "lint": "tslint -p tsconfig.json"
@@ -16,12 +16,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/lodash": "^4.14.135",
-    "barrelsby": "^2.1.1",
     "lodash": "^4.17.13",
     "typedoc": "^0.14.2"
   },
   "dependencies": {
     "@types/seedrandom": "^2.4.28",
+    "data-generator": "^1.0.0",
     "seedrandom": "^3.0.1"
   }
 }

@@ -22,25 +22,6 @@ export class WeightedPicker<T> implements Picker<T> {
     this.weightedData.sort(({ weight: a }, { weight: b }) => a - b);
   }
 
-  private getWeightedIndex(array: Weighted<any>[]): number {
-    let passedWeight = array[0].weight;
-    let choice = 0;
-
-    for (let i = 1; i < array.length; i++) {
-      const item = array[i];
-
-      // get a random number between 0 and the current cumulative weight
-      const n = this.pretender.float(0, passedWeight + item.weight);
-
-      if (n >= passedWeight) {
-        choice = i;
-      }
-      passedWeight += item.weight;
-    }
-
-    return choice;
-  }
-
   choice(): T {
     return this.weightedData[this.getWeightedIndex(this.weightedData)].item;
   }
@@ -79,5 +60,24 @@ export class WeightedPicker<T> implements Picker<T> {
     }
 
     return picks;
+  }
+
+  private getWeightedIndex(array: Array<Weighted<any>>): number {
+    let passedWeight = array[0].weight;
+    let choice = 0;
+
+    for (let i = 1; i < array.length; i++) {
+      const item = array[i];
+
+      // get a random number between 0 and the current cumulative weight
+      const n = this.pretender.float(0, passedWeight + item.weight);
+
+      if (n >= passedWeight) {
+        choice = i;
+      }
+      passedWeight += item.weight;
+    }
+
+    return choice;
   }
 }

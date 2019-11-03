@@ -1,3 +1,6 @@
+/**
+ * @typeparam T Type of the things that are being picked.
+ */
 export interface Picker<T> {
   /**
    * Pick a single item at random from the dataset
